@@ -2,19 +2,23 @@
 
 ## summarization of 20 gene breast cancer data
 
-WORK=~/Copy/cancerGenomics/20genesBreastCancer/
-FILTERED=*filtered*.tsv
+SCRIPT=`pwd`
+WORK=~/Copy/cancerGenomics/20genesBreastCancer
 
 cd $WORK
 mkdir processing
-cd paired_comparison_10262015/filtered
 
-# make list of genes
-echo -n genesAll.txt
-for x in */$FILTERED
-	do 
-		tail +2 $x | cut -f 8 | sort | uniq >> genesAll.txt
+# create filename conversion list and header
+ls paired_comparison_10262015/original_report > processing/filenames.lst
+head -1 paired_comparison_10262015/original_report/OtA9902_vs_OtA9918_text_report.txt > processing/header.tsv
+
+# extract genes of interest and send to working folder
+cd paired_comparison_10262015/original_report
+rm $WORK/processing/*report.txt
+for x in *report.txt
+	do
+		for gene in `cat $SCRIPT/BCgenes.lst`
+			do
+				grep $'\t'$gene$'\t' $x >> $WORK/processing/$x
+		done
 done
-
-sort genesAll.txt | uniq > $WORK/processing/geneNames.txt
-rm genesAll.txt
