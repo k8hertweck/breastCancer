@@ -40,3 +40,7 @@ cat header.tsv OtA9914_vs_OtA9930_text_report.txt > BR13.tsv
 cat header.tsv OtA9915_vs_OtA9931_text_report.txt > BC01.tsv
 cat header.tsv OtA9916_vs_OtA9932_text_report.txt > BC03.tsv
 cat header.tsv OtA9917_vs_OtA9933_text_report.txt > HC01.tsv
+
+# filter by quality, 1000 column 7
+
+# filter by difference between germline and somatic mutations
