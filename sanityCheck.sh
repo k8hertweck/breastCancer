@@ -1,6 +1,6 @@
 #!/bin/bash
 
-## summarization of 20 gene breast cancer data
+## summarization of target gene breast cancer data
 
 SCRIPT=`pwd`
 WORK=~/Copy/cancerGenomics/BreastCancer
