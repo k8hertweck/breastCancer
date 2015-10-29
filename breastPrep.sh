@@ -1,6 +1,6 @@
 #!/bin/bash
 
-## summarization of target gene breast cancer data
+## preparation of target gene breast cancer data
 
 SCRIPT=`pwd`
 WORK=~/Copy/cancerGenomics/BreastCancer
@@ -27,3 +27,5 @@ done
 
 # tidy up 
 rm header.tsv
+mkdir filtered
+mv *.tsv filtered
