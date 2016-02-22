@@ -22,7 +22,7 @@ for x in *report.txt
 		done
 done
 
-# filter by quality and difference between germline/somatic mutation
+# filter by (quality and) difference between germline/somatic mutation
 cd $WORK/processing
 
 for x in *report.txt

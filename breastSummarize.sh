@@ -2,15 +2,15 @@
 
 ## summarization of target gene breast cancer data
 ## dependecies:
-##		samtools
 
 SCRIPT=`pwd`
-WORK=~/Copy/cancerGenomics/BreastCancer
+WORK=~/Dropbox/cancerGenomics/breast
 DATA=~/data/breastCancerRaw
 
 cd $WORK
 
-# count number of SNPs in index files
+# count number of hits in index files (hits per individual sample from Otogenetics)
+# these samples missing *.snpEff.snpSift.txt: 11, 13, 14, 15, 16, 17, 18, 19, 20
 cd $DATA/
 echo -n > $WORK/processing/hitsIndex.lst
 echo -n > $WORK/processing/snpsIndex.lst
@@ -24,7 +24,7 @@ for x in index*
 		cd ..
 done
 
-# count number of hits in each original file
+# count number of hits in each original file (comparison between somatic and germ from Otogenetics)
 cd $WORK/paired_comparison_10262015/original_report
 echo -n > $WORK/processing/hitsOriginal.lst
 echo -n > $WORK/processing/snpsOriginal.lst
@@ -36,7 +36,7 @@ for x in *.txt
 		tail +2 $x | cut -f 1-5 | sort | uniq | wc -l >> $WORK/processing/snpsOriginal.lst
 done
 
-# count number of hits in each "on target" file
+# count number of hits in each "on target" file (only genes of interest from Otogenetics)
 cd $WORK/paired_comparison_10262015/filtered
 echo -n > $WORK/processing/hitsOnTarget.lst
 echo -n > $WORK/processing/snpsOnTarget.lst
@@ -50,7 +50,7 @@ for x in `cat $SCRIPT/sampleNames.lst`
 		cd ..
 done
 
-# count number of hits in each filtered file file
+# count number of hits in each filtered file (genes of interest, quality filtered by Otogenetics)
 echo -n > $WORK/processing/hitsFiltered.lst
 echo -n > $WORK/processing/snpsFiltered.lst
 for x in `cat $SCRIPT/sampleNames.lst`
@@ -63,8 +63,8 @@ for x in `cat $SCRIPT/sampleNames.lst`
 		cd ..
 done
 
-# count number of hits for each processed file
-cd $WORK/processing/filtered
+# count number of hits for each processed file 
+cd $WORK/processing/processed
 echo -n > ../hitsProcessed.lst
 echo -n > ../snpsProcessed.lst
 for x in *.tsv
@@ -74,6 +74,3 @@ for x in *.tsv
 		echo $x >> ../snpsProcessed.lst
 		tail +2 $x | cut -f 1-5 | sort | uniq | wc -l >> ../snpsProcessed.lst
 done
-
-# calculate average coverage from each sample (for only genes of interest?)
-#samtools depth *.bam | awk '{sum+=$3} END { print sum/NR}'
