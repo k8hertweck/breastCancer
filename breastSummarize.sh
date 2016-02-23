@@ -63,7 +63,7 @@ for x in `cat $SCRIPT/sampleNames.lst`
 		cd ..
 done
 
-# count number of hits for each processed file 
+# count number of hits for each processed file (quality filtered by Otogenetics, annotations filtered to genes of interest by me)
 cd $WORK/processing/processed
 echo -n > ../hitsProcessed.lst
 echo -n > ../snpsProcessed.lst
