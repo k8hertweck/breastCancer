@@ -1,13 +1,10 @@
 #!/bin/bash
 
 ## summarization of target gene breast cancer data
-## dependecies:
 
 SCRIPT=`pwd`
 WORK=~/Dropbox/cancerGenomics/breast
 DATA=~/data/breastCancerRaw
-
-cd $WORK
 
 # count number of hits in index files (hits per individual sample from Otogenetics)
 # these samples missing *.snpEff.snpSift.txt: 11, 13, 14, 15, 16, 17, 18, 19, 20
