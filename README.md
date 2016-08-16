@@ -1,4 +1,6 @@
-##README for breast cancer gene data
+##Description of data and workflow of scripts
+
+* data represents breast cancer gene panel from Otogenetics
 
 * Data files (not included in repo)
 	*`~/data/breastCancerRaw`
