@@ -1,5 +1,5 @@
 ## gene figures for genes that have more than 5 variants across all individuals
-## dependencies: lollipops (https://github.com/pbnjay/lollipops)
+## dependencies: lollipops (https://github.com/pbnjay/lollipops) in directory
 ## usage: geneFigures.sh PATH/TO/DATA
 
 cd $DATA
