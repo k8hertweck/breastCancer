@@ -16,12 +16,14 @@ for x in *.tsv
 		tail +2 $x | cut -f 1-6,8,9 | sort | uniq >> temp
 done
 
-echo -e 'chromosome\tstart\tend\tref\talt\tdbsnp\tGene' > ../combined/combVariants.lst
-sort temp >> ../combined/combVariants.lst
+echo -e 'chromosome\tstart\tend\tref\talt\tdbsnp\tGene\where_in_gene' > ../combined/combVariants.tsv
+sort temp >> ../combined/combVariants.tsv
 rm temp
 
 # count number of individuals with each variant
-uniq -c ../combined/combVariants.lst > ../combined/countVariants.lst
+uniq -c ../combined/combVariants.tsv > ../combined/countVariants.tsv
 
 # obtain list of unique variants
-uniq ../combined/combVariants.lst > ../combined/uniqVariants.lst
+uniq ../combined/combVariants.tsv > ../combined/uniqVariants.tsv
+
+cp ../combined/combVariants.tsv $SCRIPT/data
