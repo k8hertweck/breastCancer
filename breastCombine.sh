@@ -5,7 +5,7 @@
 SCRIPT=`pwd`
 WORK=~/Dropbox/cancerGenomics/breast
 
-cd $WORK 
+cd $WORK/processing
 mkdir combined
 
 # combine unique SNPs from different individuals
@@ -13,7 +13,7 @@ cd $WORK/processing/processed
 echo -n > temp
 for x in *.tsv
 	do
-		tail +2 $x | cut -f 1-6,8 | sort | uniq >> temp
+		tail +2 $x | cut -f 1-6,8,9 | sort | uniq >> temp
 done
 
 echo -e 'chromosome\tstart\tend\tref\talt\tdbsnp\tGene' > ../combined/combVariants.lst
