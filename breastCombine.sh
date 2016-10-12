@@ -9,7 +9,7 @@ cd $WORK/processing
 mkdir combined
 
 # combine unique SNPs from different individuals
-cd $WORK/processing/processed
+cd $WORK/processing/target_genes
 echo -n > temp
 for x in *.tsv
 	do
@@ -26,4 +26,4 @@ uniq -c ../combined/combVariants.tsv > ../combined/countVariants.tsv
 # obtain list of unique variants
 uniq ../combined/combVariants.tsv > ../combined/uniqVariants.tsv
 
-cp ../combined/combVariants.tsv $SCRIPT/data
+cp ../combined/combVariants.tsv $SCRIPT/mutationFigures

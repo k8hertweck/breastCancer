@@ -61,7 +61,7 @@ for x in `cat $SCRIPT/sampleNames.lst`
 done
 
 # count number of hits for each processed file (quality filtered by Otogenetics, annotations filtered to genes of interest by me)
-cd $WORK/processing/processed
+cd $WORK/processing/target_genes
 echo -n > ../hitsProcessed.lst
 echo -n > ../snpsProcessed.lst
 for x in *.tsv
@@ -71,3 +71,7 @@ for x in *.tsv
 		echo $x >> ../snpsProcessed.lst
 		tail +2 $x | cut -f 1-5 | sort | uniq | wc -l >> ../snpsProcessed.lst
 done
+
+# organize results
+mkdir summary
+mv *.lst summary

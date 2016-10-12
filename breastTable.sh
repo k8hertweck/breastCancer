@@ -5,7 +5,7 @@
 SCRIPT=`pwd`
 WORK=~/Dropbox/cancerGenomics/breast
 
-cd $WORK/processing/processed 
+cd $WORK/processing/target_genes 
 
 rm *.table breastTable.*
 
@@ -63,3 +63,17 @@ sed s/.csv.table//g breastTable.tsv |
 	awk '{print $1,$6,$2,$7,$3,$4,$8,$5}' |
 	tr " " "," |
 	sed 's/,\.,/,NA,/g' > breastTable.csv
+
+# create file with just nonsynonymous mutations
+grep -v synonymous breastTable.csv > breastTableNonsyn.csv
+
+# create file with all mutations by gene
+echo -n geneMutations.csv
+for gene in `cat $SCRIPT/BCgenes.lst`
+		do
+			echo $gene >> geneMutations.csv
+			grep ","$gene breastTableNonsyn.csv >> geneMutations.csv
+done
+
+# create file with deletions
+grep deletion breastTable.csv > geneDeletions.csv
