@@ -1,16 +1,16 @@
 #!/bin/bash
 
-## summarization of target gene breast cancer data
+## summarization of target gene breast cancer data to check somatic calls
 
 SCRIPT=`pwd`
-WORK=~/Copy/cancerGenomics/BreastCancer
+WORK=~/Dropbox/cancerGenomics/breast
 
 cd $WORK
-mkdir processing
+mkdir -p processing/somaticCheck
 
 # create filename conversion list and header
-ls paired_comparison_10262015/original_report > processing/filenames.lst
-head -1 paired_comparison_10262015/original_report/OtA9902_vs_OtA9918_text_report.txt > processing/header.tsv
+ls paired_comparison_10262015/original_report > processing/somaticCheck/filenames.lst # for file renaming below
+head -1 paired_comparison_10262015/original_report/OtA9902_vs_OtA9918_text_report.txt > processing/somaticCheck/header.tsv
 
 # extract genes of interest and send to working folder
 cd paired_comparison_10262015/original_report
@@ -18,12 +18,12 @@ for x in *report.txt
 	do
 		for gene in `cat $SCRIPT/BCgenes.lst`
 			do
-				grep $'\t'$gene$'\t' $x >> $WORK/processing/$x
+				grep $'\t'$gene$'\t' $x >> $WORK/processing/somaticCheck/$x
 		done
 done
 
 # filter by (quality and) difference between germline/somatic mutation
-cd $WORK/processing
+cd $WORK/processing/somaticCheck
 
 for x in *report.txt
 	do
@@ -49,6 +49,4 @@ cat header.tsv filt.OtA9916_vs_OtA9932_text_report.txt > BC03.tsv
 cat header.tsv filt.OtA9917_vs_OtA9933_text_report.txt > HC01.tsv
 
 # tidy up
-mkdir sanityCheck
-mv *.tsv sanityCheck
-rm *.txt
+rm *.txt filenames.lst header.tsv
