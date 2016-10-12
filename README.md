@@ -14,18 +14,20 @@
 			* `onTarget` only genes of interest (filtered by coordinate, so includes annotations for other genes)
 			* `filtered` quality filtered onTarget data, 10X min
 	* `processing/`
-		* `processed/` filtered data with only genes of interest (from Otogenetics files)
-		* `sanityCheck/` one file for each individual, compare somatic/germline, quality filtering
-		* Summary files:
+		* `target_genes/` filtered data with only genes of interest (from Otogenetics files)
+		* `somaticCheck/` one file for each individual, compare somatic/germline, quality filtering
+		* `summary/`:
 			* `*hits` all annotations (may be multiples for same SNP)
 			* `*snps` only unique SNPs
 			* snpsFiltered and snpsProcessed should have identical counts
 
-* Scripts to extract mutations (to be run in order listed)
+* lists that describe data:
 	* `BCgenes.lst` list of genes of interest
 	* `sampleNames.lst` list of unique identifier for each sample
 	* `nameTrans.lst` list relating library (file) names to sample IDs
-	* `sanityCheck.sh` reassess somatic vs germline mutation from variant calls	
+
+* Scripts to extract mutations (to be run in order listed)
+	* `somaticCheck.sh` reassess somatic vs germline mutation from variant calls	
 	* `breastPrep.sh` extracts results for genes of interest
 	* `breastCombine.sh` aggregating data by gene for all patients
 	* `breastSummarize.sh` summarizing and comparing analyses of variant calls
