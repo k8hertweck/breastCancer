@@ -81,6 +81,15 @@ cd $DATA
    4 chr16,PALB2,23646191,missense,T,C,Gln>Arg,rs152451 T559C@4
    1 chr16,PALB2,23647238,missense,G,A,Pro>Leu,rs57605939 G210A
 
+./lollipops -f /Library/Fonts/Microsoft/Arial.ttf -hide-motifs -o AR.png AR 
+
+./lollipops -f /Library/Fonts/Microsoft/Arial.ttf -hide-motifs -o ARdel.png AR 
+
+   1 chrX,AR,66765158,missense,T,A,Leu>Gln,rs78686797 TXXXA
+   3 chrX,AR,66765627,synonymous,G,A,Glu>Glu,rs6152
+   1 chrX,inframe_deletion,66766357,,GGCGGCGGCGGC,NA,,AR RXXX#00ff00 RXXX#00ff00
+   2 chrX,inframe_deletion,66766357,,GGCGGCGGCGGCGGCGGC,NA,,AR RXXX#00ff00 RXXX#00ff00
+
 ## variants for each gene below are listed, but lollipops not coded
 #BRIP1
 #   5 chr17,BRIP1,59760996,synonymous,A,G,Tyr>Tyr,rs4986763
@@ -113,12 +122,6 @@ cd $DATA
 #    
 # TP53 
 #    4 chr17,TP53,7579472,missense,G,C,Pro>Arg,rs1042522
-# 
-# AR
-#    1 chrX,AR,66765158,missense,T,A,Leu>Gln,rs78686797
-#    3 chrX,AR,66765627,synonymous,G,A,Glu>Glu,rs6152
-#    1 chrX,inframe_deletion,66766357,,GGCGGCGGCGGC,NA,,AR
-#    2 chrX,inframe_deletion,66766357,,GGCGGCGGCGGCGGCGGC,NA,,AR
 # 
 # DIRAS3
 #    1 chr1,DIRAS3,68512441,synonymous,A,G,Ile>Ile,rs61736596
