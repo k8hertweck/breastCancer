@@ -73,5 +73,6 @@ for x in *.tsv
 done
 
 # organize results
+cd ..
 mkdir summary
 mv *.lst summary
