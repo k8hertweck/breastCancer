@@ -7,15 +7,11 @@ WORK=~/Dropbox/cancerGenomics/breast
 
 cd $WORK/processing/target_genes 
 
+# clean up previous attempts
 rm *.table breastTable.*
 
-# convert to csv
-for x in *.tsv
-	do
-		cat $x | tr "\t" "," > $x.csv
-done
-
-rename 's/.tsv.csv/.csv/' *.csv
+# rename for easier file inspection with spreadsheet program
+rename 's/.tsv/.csv/' *.tsv
 
 # make header
 head -1 BC01.csv > header.txt
@@ -23,32 +19,65 @@ head -1 BC01.csv > header.txt
 # create list of unique dbsnp for each individual
 for x in *.csv
 	do
-		tail +2 $x | cut -d , -f 1-6 | uniq > $x.dbsnp.lst
+		tail +2 $x | cut -f 6 | uniq > $x.dbsnp.lst
 done
 
 # extract first hit for each SNP from respective files
-for x in *.csv
+for x in `cat $SCRIPT/sampleNames.lst`
 	do
 		cat header.txt > $x.temp
-			for snp in `cat $x.dbsnp.lst`
+			for snp in `cat $x.csv.dbsnp.lst`
 				do
-					grep -m 1 $snp $x >> $x.temp
-					cat $x.temp | tr "," "\t" > $x.table
+					grep -m 1 $snp $x.csv >> $x.temp
+					cat $x.temp > $x.table
 				done
 done
 
 # clean up
-rm *.temp *.dbsnp.lst *.csv
+rename 's/.table/.table.csv/' *.table
 
-# create master file
-echo -n > breastTable.tsv
-for x in *.table
+# extract somatic variants (only in sputum)
+# Ref/Het, Ref/Hom, Hom/Het
+for x in `cat $SCRIPT/sampleNames.lst`
 	do
-		echo -e '\n'$x >> breastTable.tsv
-		cut -f 1,2,4,5,6,8,9,10 $x >> breastTable.tsv
+		cat header.txt > $x.somatic.csv
+		awk -F "\t" '{
+			if ($18 == "Ref" && $21 == "Het") print $0; 
+			else if ($18 == "Ref" && $21 == "Hom") print $0;
+			else if ($18 == "Hom" && $21 == "Het") print $0;
+			else next}' $x.table.csv > $x.somatic.csv
+done
+
+# extract germline variants (in both sputum and lymphocyte)
+# Het/Hom, Het/Ref
+for x in `cat $SCRIPT/sampleNames.lst`
+	do
+		cat header.txt > $x.germline.csv
+		awk -F "\t" '{
+			if ($18 == "Het" && $21 == "Hom") print $0; 
+			else if ($18 == "Het" && $21 == "Ref") print $0;
+			else next}' $x.table.csv > $x.germline.csv
+done
+
+# extract variants present only in germline (lymphocyte)
+# Hom/Ref
+for x in `cat $SCRIPT/sampleNames.lst`
+	do
+		cat header.txt > $x.remove.csv
+		awk -F "\t" '{
+			if ($18 == "Hom" && $21 == "Ref") print $0; 
+			else next}' $x.table.csv > $x.remove.csv
+done
+
+# aggregate somatic variants among samples
+echo -n > breastTable.somatic.csv.temp
+for x in `cat $SCRIPT/sampleNames.lst`
+	do
+		echo -e '\n'$x >> breastTable.somatic.csv.temp
+		cut -f 1,2,4,5,6,8,9,10 $x.somatic.csv >> breastTable.somatic.csv.temp
 done
 		
-sed s/.csv.table//g breastTable.tsv | 
+sed s/.csv.table//g breastTable.somatic.csv.temp | 
 	sed s/_variant//g |
 	sed s/snpEffEffect/type/g |
 	sed s/snpEffHGVS/mutation/g |
@@ -61,19 +90,22 @@ sed s/.csv.table//g breastTable.tsv |
 	sed -E 's/([A-Z]{1}[a-z]{2})[0-9]{1,4}/\1\>/g' |
 	sed -E 's/[A-Z][a-z]{2}\>_.*$//' |
 	awk '{print $1,$6,$2,$7,$3,$4,$8,$5}' |
-	tr " " "," |
-	sed 's/,\.,/,NA,/g' > breastTable.csv
+	sed 's/,\.,/,NA,/g' > breastTable.somatic.csv
 
-# create file with just nonsynonymous mutations
-grep -v synonymous breastTable.csv > breastTableNonsyn.csv
+# create file with just nonsynonymous variants (used in publication)
+grep -v synonymous breastTable.somatic.csv > breastTable.somatic.nonsyn.csv
 
-# create file with all mutations by gene
-echo -n geneMutations.csv
+# create file with all variants by gene
+echo -n genevariants.csv
 for gene in `cat $SCRIPT/BCgenes.lst`
-		do
-			echo $gene >> geneMutations.csv
-			grep ","$gene breastTableNonsyn.csv >> geneMutations.csv
+	do
+		echo $gene >> genevariants.csv
+		grep ' $gene ' breastTable.somatic.nonsyn.csv >> genevariants.csv
 done
 
 # create file with deletions
-grep deletion breastTable.csv > geneDeletions.csv
+echo -n geneDeletions.csv
+for x in `cat $SCRIPT/sampleNames.lst`
+	do
+		grep deletion $x.csv >> geneDeletions.csv
+done
