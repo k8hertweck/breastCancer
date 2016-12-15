@@ -14,8 +14,8 @@
 			* `onTarget` only genes of interest (filtered by coordinate, so includes annotations for other genes)
 			* `filtered` quality filtered onTarget data, 10X min
 	* `processing/`
-		* `target_genes/` filtered data with only genes of interest (from Otogenetics files)
-		* `somaticCheck/` one file for each individual, compare somatic/germline, quality filtering
+		* `target_genes/` somatic/germline calling for only genes of interest from filtered Otogenetics data
+		* `somaticCheck/` one file for each individual, compare somatic/germline calling and quality filtering from Otogenetics
 		* `summary/`:
 			* `*hits` all annotations (may be multiples for same SNP)
 			* `*snps` only unique SNPs
@@ -32,7 +32,6 @@
 	* `breastCombine.sh` aggregating data by gene for all patients
 	* `breastSummarize.sh` summarizing and comparing analyses of variant calls
 	* `breastTable.sh` creating table from variant calls (by individual)
-	* `germline.sh` extracting germline mutations for BRCA
 
 * `geneFigures/`
 	* `geneFigures.sh` creating gene figures from variant calls (using lollipops); these figures were not used in manuscript
