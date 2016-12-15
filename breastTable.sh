@@ -143,3 +143,10 @@ for x in `cat $SCRIPT/sampleNames.lst`
 	do
 		grep deletion $x.csv >> geneDeletions.csv
 done
+
+# create file for gene figures that includes germline and somatic mutations
+echo "SOMATIC" > geneFigs.csv
+grep "missense_variant" breastTable.somatic.csv.temp | sort -k 6 | uniq -c | sort -k 7 >> geneFigs.csv
+
+echo "GERMLINE" >> geneFigs.csv
+grep "missense_variant" breastTable.germline.csv.temp | sort -k 6 | uniq -c | sort -k 7 >> geneFigs.csv
