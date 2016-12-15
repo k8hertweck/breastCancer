@@ -92,15 +92,49 @@ sed s/.csv.table//g breastTable.somatic.csv.temp |
 	awk '{print $1,$6,$2,$7,$3,$4,$8,$5}' |
 	sed 's/,\.,/,NA,/g' > breastTable.somatic.csv
 
-# create file with just nonsynonymous variants (used in publication)
+# create file with just nonsynonymous somatic variants (used in publication)
 grep -v synonymous breastTable.somatic.csv > breastTable.somatic.nonsyn.csv
 
-# create file with all variants by gene
-echo -n genevariants.csv
+# create files with all somatic variants by gene
+echo -n somaticVariants.csv
 for gene in `cat $SCRIPT/BCgenes.lst`
 	do
-		echo $gene >> genevariants.csv
-		grep ' $gene ' breastTable.somatic.nonsyn.csv >> genevariants.csv
+		echo $gene >> somaticVariants.csv
+		grep " $gene " breastTable.somatic.nonsyn.csv >> somaticVariants.csv
+done
+
+# aggregate germline variants among all samples for BRCA1 and BRCA1
+echo -n > breastTable.germline.csv.temp
+for x in `cat $SCRIPT/sampleNames.lst`
+	do
+		echo -e '\n'$x >> breastTable.germline.csv.temp
+		cut -f 1,2,4,5,6,8,9,10 $x.germline.csv >> breastTable.germline.csv.temp
+done
+		
+sed s/.csv.table//g breastTable.germline.csv.temp | 
+	sed s/_variant//g |
+	sed s/snpEffEffect/type/g |
+	sed s/snpEffHGVS/mutation/g |
+	sed s/ref/reference/g |
+	sed s/alt/variant/ |
+	sed s/dbsnp/dbSNP/ |
+	sed s/start/position/ |
+	sed 's/\/c.*$//' |
+	sed 's/NM_.*:p\.//' |
+	sed -E 's/([A-Z]{1}[a-z]{2})[0-9]{1,4}/\1\>/g' |
+	sed -E 's/[A-Z][a-z]{2}\>_.*$//' |
+	awk '{print $1,$6,$2,$7,$3,$4,$8,$5}' |
+	sed 's/,\.,/,NA,/g' > breastTable.germline.csv
+
+# create file with just nonsynonymous germline variants (used in publication)
+grep -v synonymous breastTable.germline.csv > breastTable.germline.nonsyn.csv
+
+# create files with all germline variants by gene
+echo -n germlineVariants.csv
+for gene in `cat $SCRIPT/BCgenes.lst`
+	do
+		echo $gene >> germlineVariants.csv
+		grep " $gene " breastTable.germline.nonsyn.csv >> germlineVariants.csv
 done
 
 # create file with deletions
