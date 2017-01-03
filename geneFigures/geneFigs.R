@@ -4,7 +4,7 @@ source("https://bioconductor.org/biocLite.R")
 biocLite("trackViewer")
 library(trackViewer)
 
-## BRCA2 UniProt http://www.uniprot.org/uniprot/P51587#showFeaturesViewer
+## BRCA2 combined UniProt http://www.uniprot.org/uniprot/P51587#showFeaturesViewer
 BRCA2snps <- c(289, 372, 991, 2034, 289, 326, 372, 991, 2034, 2108, 2440) # enter data (somatic first, then germline)
 # specify genomic range for SNPs
 BRCA2.gr <- GRanges("chr1", IRanges(BRCA2snps, width=1, names=paste0(BRCA2snps)))
@@ -16,11 +16,43 @@ BRCA2features <- GRanges("chr1", IRanges(c(1, 1002, 1212, 1421, 1517, 1664, 1837
                                          names=paste0("block", 1:3)))
 BRCA2features$fill <- c("gray", "green", "green", "green", "green", "green", "green", "green", "green", "gray") # change color
 # plot lolliplot
+jpeg("geneFigures/BRCA2combined.jpg")
+lolliplot(BRCA2.gr, BRCA2features, ylab = FALSE, yaxis = FALSE, xaxis=c(1, 3418))
+dev.off()
+
+## BRCA2 somatic UniProt http://www.uniprot.org/uniprot/P51587#showFeaturesViewer
+BRCA2snps <- c(289, 372, 991, 2034) # enter somatic data 
+# specify genomic range for SNPs
+BRCA2.gr <- GRanges("chr1", IRanges(BRCA2snps, width=1, names=paste0(BRCA2snps)))
+BRCA2.gr$color <- "red" # define SNP color
+BRCA2.gr$score <- c(1, 1, 1, 1) # define number of each SNP
+# specify genomic range for features (repeats)
+BRCA2features <- GRanges("chr1", IRanges(c(1, 1002, 1212, 1421, 1517, 1664, 1837, 1971, 2051, 3418), 
+                                         width=c(1, 34, 34, 34, 34, 34, 34, 34, 34, 1),
+                                         names=paste0("block", 1:3)))
+BRCA2features$fill <- c("gray", "green", "green", "green", "green", "green", "green", "green", "green", "gray") # change color
+# plot lolliplot
+jpeg("geneFigures/BRCA2somatic.jpg")
+lolliplot(BRCA2.gr, BRCA2features, ylab = FALSE, yaxis = FALSE, xaxis=c(1, 3418))
+dev.off()
+
+## BRCA2 germline UniProt http://www.uniprot.org/uniprot/P51587#showFeaturesViewer
+BRCA2snps <- c(289, 326, 372, 991, 2034, 2108, 2440) # enter germline data 
+# specify genomic range for SNPs
+BRCA2.gr <- GRanges("chr1", IRanges(BRCA2snps, width=1, names=paste0(BRCA2snps)))
+BRCA2.gr$color <- "blue" # define SNP color
+BRCA2.gr$score <- c(1, 1, 1, 2, 1, 1, 1) # define number of each SNP
+# specify genomic range for features (repeats)
+BRCA2features <- GRanges("chr1", IRanges(c(1, 1002, 1212, 1421, 1517, 1664, 1837, 1971, 2051, 3418), 
+                                         width=c(1, 34, 34, 34, 34, 34, 34, 34, 34, 1),
+                                         names=paste0("block", 1:3)))
+BRCA2features$fill <- c("gray", "green", "green", "green", "green", "green", "green", "green", "green", "gray") # change color
+# plot lolliplot
 jpeg("geneFigures/BRCA2.jpg")
 lolliplot(BRCA2.gr, BRCA2features, ylab = FALSE, yaxis = FALSE, xaxis=c(1, 3418))
 dev.off()
 
-## BRCA1 UniProt http://www.uniprot.org/uniprot/P38398#showFeaturesViewer
+## BRCA1 combined UniProt http://www.uniprot.org/uniprot/P38398#showFeaturesViewer
 BRCA1snps <- c(871, 1038, 1183, 1236, 1613, 693, 871, 1038, 1183, 1236, 1613) # enter data (somatic first, then germline)
 # specify genomic range for SNPs
 BRCA1.gr <- GRanges("chr1", IRanges(BRCA1snps, width=1, names=paste0(BRCA1snps)))
@@ -32,7 +64,39 @@ BRCA1features <- GRanges("chr1", IRanges(c(1, 24, 1642, 1756, 1863),
                                          names=paste0("block", 1:3)))
 BRCA1features$fill <- c("gray", "green", "red", "blue", "gray") # change color
 # plot lolliplot
-jpeg("geneFigures/BRCA1.jpg")
+jpeg("geneFigures/BRCA1combined.jpg")
+lolliplot(BRCA1.gr, BRCA1features, ylab = FALSE, yaxis = FALSE, xaxis=c(1, 1863), cex=0.8)
+dev.off()
+
+## BRCA1 somatic UniProt http://www.uniprot.org/uniprot/P38398#showFeaturesViewer
+BRCA1snps <- c(871, 1038, 1183, 1236, 1613) # enter somatic data
+# specify genomic range for SNPs
+BRCA1.gr <- GRanges("chr1", IRanges(BRCA1snps, width=1, names=paste0(BRCA1snps)))
+BRCA1.gr$color <- "red" # define SNP color
+BRCA1.gr$score <- c(1, 1, 1, 1, 1) # define number of each SNP
+# specify genomic range for features (zinc finger and domains)
+BRCA1features <- GRanges("chr1", IRanges(c(1, 24, 1642, 1756, 1863), 
+                                         width=c(1, 41, 94, 99, 1),
+                                         names=paste0("block", 1:3)))
+BRCA1features$fill <- c("gray", "green", "red", "blue", "gray") # change color
+# plot lolliplot
+jpeg("geneFigures/BRCA1somatic.jpg")
+lolliplot(BRCA1.gr, BRCA1features, ylab = FALSE, yaxis = FALSE, xaxis=c(1, 1863), cex=0.8)
+dev.off()
+
+## BRCA1 germline UniProt http://www.uniprot.org/uniprot/P38398#showFeaturesViewer
+BRCA1snps <- c(693, 871, 1038, 1183, 1236, 1613) # enter germline data
+# specify genomic range for SNPs
+BRCA1.gr <- GRanges("chr1", IRanges(BRCA1snps, width=1, names=paste0(BRCA1snps)))
+BRCA1.gr$color <- "blue" # define SNP color
+BRCA1.gr$score <- c(1, 2, 2, 2, 1, 2) # define number of each SNP
+# specify genomic range for features (zinc finger and domains)
+BRCA1features <- GRanges("chr1", IRanges(c(1, 24, 1642, 1756, 1863), 
+                                         width=c(1, 41, 94, 99, 1),
+                                         names=paste0("block", 1:3)))
+BRCA1features$fill <- c("gray", "green", "red", "blue", "gray") # change color
+# plot lolliplot
+jpeg("geneFigures/BRCA1germline.jpg")
 lolliplot(BRCA1.gr, BRCA1features, ylab = FALSE, yaxis = FALSE, xaxis=c(1, 1863), cex=0.8)
 dev.off()
 
