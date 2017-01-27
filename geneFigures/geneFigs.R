@@ -48,7 +48,7 @@ BRCA2features <- GRanges("chr1", IRanges(c(1, 1002, 1212, 1421, 1517, 1664, 1837
                                          names=paste0("block", 1:3)))
 BRCA2features$fill <- c("gray", "green", "green", "green", "green", "green", "green", "green", "green", "gray") # change color
 # plot lolliplot
-jpeg("geneFigures/BRCA2.jpg")
+jpeg("geneFigures/BRCA2germline.jpg")
 lolliplot(BRCA2.gr, BRCA2features, ylab = FALSE, yaxis = FALSE, xaxis=c(1, 3418))
 dev.off()
 
