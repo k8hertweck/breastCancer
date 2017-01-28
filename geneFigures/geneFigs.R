@@ -9,7 +9,7 @@ BRCA2snps <- c(289, 372, 991, 2034, 289, 326, 372, 991, 2034, 2108, 2440) # ente
 # specify genomic range for SNPs
 BRCA2.gr <- GRanges("chr1", IRanges(BRCA2snps, width=1, names=paste0(BRCA2snps)))
 BRCA2.gr$color <- c(replicate(4, "red"), replicate(7, "blue")) # define SNP color
-BRCA2.gr$score <- c(1, 1, 1, 1, 1, 1, 1, 2, 1, 1, 1) # define number of each SNP
+BRCA2.gr$score <- c(1, 2, 1, 1, 1, 1, 1, 2, 1, 1, 1) # define number of each SNP
 # specify genomic range for features (repeats)
 BRCA2features <- GRanges("chr1", IRanges(c(1, 1002, 1212, 1421, 1517, 1664, 1837, 1971, 2051, 3418), 
                                          width=c(1, 34, 34, 34, 34, 34, 34, 34, 34, 1),
@@ -25,7 +25,7 @@ BRCA2snps <- c(289, 372, 991, 2034) # enter somatic data
 # specify genomic range for SNPs
 BRCA2.gr <- GRanges("chr1", IRanges(BRCA2snps, width=1, names=paste0(BRCA2snps)))
 BRCA2.gr$color <- "red" # define SNP color
-BRCA2.gr$score <- c(1, 1, 1, 1) # define number of each SNP
+BRCA2.gr$score <- c(1, 2, 1, 1) # define number of each SNP
 # specify genomic range for features (repeats)
 BRCA2features <- GRanges("chr1", IRanges(c(1, 1002, 1212, 1421, 1517, 1664, 1837, 1971, 2051, 3418), 
                                          width=c(1, 34, 34, 34, 34, 34, 34, 34, 34, 1),
@@ -57,7 +57,7 @@ BRCA1snps <- c(871, 1038, 1183, 1236, 1613, 693, 871, 1038, 1183, 1236, 1613) # 
 # specify genomic range for SNPs
 BRCA1.gr <- GRanges("chr1", IRanges(BRCA1snps, width=1, names=paste0(BRCA1snps)))
 BRCA1.gr$color <- c(replicate(5, "red"), replicate(6, "blue")) # define SNP color
-BRCA1.gr$score <- c(1, 1, 1, 1, 1, 1, 2, 2, 2, 1, 2) # define number of each SNP
+BRCA1.gr$score <- c(3, 2, 2, 1, 2, 1, 2, 2, 2, 1, 2) # define number of each SNP
 # specify genomic range for features (zinc finger and domains)
 BRCA1features <- GRanges("chr1", IRanges(c(1, 24, 1642, 1756, 1863), 
                                          width=c(1, 41, 94, 99, 1),
@@ -73,7 +73,7 @@ BRCA1snps <- c(871, 1038, 1183, 1236, 1613) # enter somatic data
 # specify genomic range for SNPs
 BRCA1.gr <- GRanges("chr1", IRanges(BRCA1snps, width=1, names=paste0(BRCA1snps)))
 BRCA1.gr$color <- "red" # define SNP color
-BRCA1.gr$score <- c(1, 1, 1, 1, 1) # define number of each SNP
+BRCA1.gr$score <- c(3, 2, 2, 1, 2) # define number of each SNP
 # specify genomic range for features (zinc finger and domains)
 BRCA1features <- GRanges("chr1", IRanges(c(1, 24, 1642, 1756, 1863), 
                                          width=c(1, 41, 94, 99, 1),
@@ -133,11 +133,11 @@ lolliplot(ATM.gr, ATMfeatures, ylab = FALSE, yaxis = FALSE, xaxis=c(1, 3056))
 dev.off()
 
 ## ERBB2 UniProt http://www.uniprot.org/uniprot/P04626#showFeaturesViewer
-ERBB2snps <- c(625, 1140) # enter data
+ERBB2snps <- c(4, 625, 1140) # enter data
 # specify genomic range for SNPs
 ERBB2.gr <- GRanges("chr1", IRanges(ERBB2snps, width=1, names=paste0(ERBB2snps)))
 ERBB2.gr$color <- "red" # define SNP color
-ERBB2.gr$score <- c(3, 3) # define number of each SNP
+ERBB2.gr$score <- c(1, 3, 3) # define number of each SNP
 # specify genomic range for features
 ERBB2features <- GRanges("chr1", IRanges(c(1, 720, 1255), 
                                        width=c(1, 267, 1),
@@ -153,7 +153,7 @@ PALB2snps <- c(559) # enter data
 # specify genomic range for SNPs
 PALB2.gr <- GRanges("chr1", IRanges(PALB2snps, width=1, names=paste0(PALB2snps)))
 PALB2.gr$color <- "red" # define SNP color
-PALB2.gr$score <- c(2) # define number of each SNP
+PALB2.gr$score <- c(3) # define number of each SNP
 # specify genomic range for features (repeats)
 PALB2features <- GRanges("chr1", IRanges(c(1, 837, 1186), 
                                     width=c(1, 349, 1),
