@@ -7,19 +7,16 @@ WORK=~/Dropbox/cancerGenomics/breast
 
 cd $WORK/processing/target_genes 
 
-# clean up previous attempts
-rm *.table breastTable.*
-
 # rename for easier file inspection with spreadsheet program
 rename 's/.tsv/.csv/' *.tsv
 
 # make header
 head -1 BC01.csv > header.txt
 
-# create list of unique dbsnp for each individual
+# create list of unique identifier for each individual
 for x in *.csv
 	do
-		tail +2 $x | cut -f 6 | uniq > $x.dbsnp.lst
+		tail +2 $x | cut -f 6 | uniq | sed 's:\.:\\\.:g' > $x.dbsnp.lst
 done
 
 # extract first hit for each SNP from respective files
@@ -28,16 +25,20 @@ for x in `cat $SCRIPT/sampleNames.lst`
 		cat header.txt > $x.temp
 			for snp in `cat $x.csv.dbsnp.lst`
 				do
-					grep -m 1 $snp $x.csv >> $x.temp
+					grep -m 1 "\t$snp\t" $x.csv >> $x.temp
 					cat $x.temp > $x.table
 				done
 done
 
 # clean up
 rename 's/.table/.table.csv/' *.table
+# remove misfiltered indels
+echo -n > BR07.table.csv
+grep -v "GGCGGCGGCGGCGGCGGC" BR13.table.csv > temp
+mv temp BR13.table.csv
 
 # extract somatic variants (only in sputum)
-# Ref/Het, Ref/Hom, Hom/Het
+# Ref/Het, Ref/Hom, Hom/Het, Hom/Ref
 for x in `cat $SCRIPT/sampleNames.lst`
 	do
 		cat header.txt > $x.somatic.csv
@@ -45,6 +46,7 @@ for x in `cat $SCRIPT/sampleNames.lst`
 			if ($18 == "Ref" && $21 == "Het") print $0; 
 			else if ($18 == "Ref" && $21 == "Hom") print $0;
 			else if ($18 == "Hom" && $21 == "Het") print $0;
+			else if ($18 == "Hom" && $21 == "Ref") print $0;
 			else next}' $x.table.csv > $x.somatic.csv
 done
 

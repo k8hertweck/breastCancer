@@ -4,6 +4,7 @@ library(dplyr)
 library(tidyr)
 library(ggplot2)
 
+## all somatic mutations
 # import data
 dat <- read.delim("mutationFigures/combVariants.tsv", row.names=NULL)
 # filter out synonymous variants
@@ -14,3 +15,5 @@ datFunc <- dat %>%
 ggplot(datFunc, aes(Gene, fill=where_in_gene)) + geom_bar(position="dodge") + geom_bar(position="dodge", colour="black", show.legend=FALSE) + scale_fill_brewer(palette="Set1", name="location in\ngene") + ylab("number of mutations") + theme_bw() + guides(fill=FALSE)
 ggsave(file="mutationFigures/mutations.pdf")
 ggsave(file="mutationFigures/mutations.jpg")
+
+# unique somatic mutations
